@@ -1,0 +1,172 @@
+---
+title: "Reading data files"
+output: html_notebook
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+GOAL: Learn to read data into the R environment, practice plotting
+
+First, load the tidyverse package
+
+```{r}
+
+```
+
+Notice the SN... files in the files tab. Those are comma separated
+values files containing data from temperature and light sensors. You can
+click on them to see what they look like.
+
+These files are in our project folder, but they are NOT in our
+Environment. Note the environment tab (upper right) is empty.
+
+To get them into our environment we must read them in.
+
+We will do this with the following format:
+
+NewData \<- read_csv("datafile.csv")
+
+read_csv is not the same as read.csv
+
+read_csv is part of the tidyverse and reads the file name we pass to it
+and spits it out. We take that output and assign it to a variable using
+the \<- operator. Also note the quotes around the file name. (about
+read.csv)
+
+If you don't put the read_csv output into a variable, it'll just print
+it and not store it in the environment.
+
+Read SN20680157.csv into a variable called Far then look at the data.
+What do you see? Any problems?
+
+```{r}
+
+```
+
+Let's think about how read_csv works and why this might have happened.
+
+Is there anything in the read_csv help file that might help solve the
+problem?
+
+Now read in the same file into Far again. Check it out. Better?
+
+```{r}
+
+
+```
+
+Rename the first three columns DateTime, Temp_F, Int_lmft2 Good names
+have what properties?
+
+function(input, param1, param2) input %\>% function(param1, param2)
+
+read data then rename rename(read_csv(data.csv), newname = oldname)
+
+read_csv(data.csv) %\>% rename(newname = oldname)
+
+jelly() peanut() makessando()
+
+makessando(peanut(jelly()))
+
+jelly() %\>% peanut() %\>% makessando()
+
+```{r}
+
+```
+
+Remove the columns beyond Int_lmft2, we don't need them
+
+```{r}
+
+```
+
+The pipe allows us to do this in one set of statements instead of
+setting Far equal to itself every time. Use the pipe operator to read
+the file, change the column names, and select the first three columns
+all at once
+
+Read -\> rename -\> select BaseR: select(rename(Read_file("file"),
+newname, newname), columns)
+
+Tidyverse: Read_file("file") %\>% rename(newname, newname) %\>%
+select(column)
+
+```{r}
+
+```
+
+Plot the date and time vs temperature use the classic theme plot as a
+line change the y and x axis labels
+
+```{r}
+
+```
+
+Let's read in another file so we can compare it to the one we just read.
+
+Since the sensor output is identical, we can read another sensor using
+the exact same code, just changing the name. This is why it is so
+important to keep consistent formatting!
+
+Read the file ending in 159 and call it Near Read the file ending in 158
+and call it Outside
+
+Then check them out and see if they look ok.
+
+```{r}
+
+```
+
+Now, add the data from Far and Outside to your plot from earlier
+
+```{r}
+
+```
+
+It is almost always better to combine your data into one tibble and then
+plot from that.
+
+How could we combine all three sets of data into 1? Don't think about
+code, just in general.
+
+DateTime Temp Int ID 12 . 5 . 6 . Near 12 . 5 . 6 . near 12 . 5 . 6 .
+far 12 . 5 . 6 . far 12 . 5 . 6 . outside 12 . 5 . 6 . outside
+
+We can do this in R using bind_rows()
+
+The syntax is
+
+NewData \<- bind_rows("How to ID data" = data, "How to id data" = data,
+.id = "What to call the new column that id's the data")
+
+```{r}
+
+```
+
+Now plot Date against temp but assign color to Location
+
+```{r}
+
+```
+
+Let's look at the distribution of data in all three locations using a
+histogram
+
+```{r}
+
+```
+
+Let's look at the distribution as boxplots
+
+```{r}
+
+```
+
+Make a plot of date vs temp, use the classic theme, and label the x and
+y axes appropriately, and show a separate plot for each location using
+the facet function of ggplot
+
+```{r}
+
+```
